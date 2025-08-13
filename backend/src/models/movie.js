@@ -8,6 +8,20 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true // Title is mandatory
   },
+  // Description of the movie
+  description: { 
+    type: String,
+    required: true // Description is mandatory
+  },
+  // URL of the movie poster image
+  poster: { 
+    type: String,
+    required: true // Must provide a poster image URL
+  },
+  background : {
+    type: String,
+    required: true // Must provide a background image URL
+  },
   // Direct download link for the movie
   downloadLink: { 
     type: String,
@@ -27,7 +41,11 @@ const movieSchema = new mongoose.Schema({
   comments: [{ 
     type: mongoose.Schema.Types.ObjectId, 
     ref: "Comment" // Links to Comment model
-  }]
+  }],
+  downloads : {
+    type: Number,
+    default: 0 // Tracks how many times the movie has been downloaded
+  }
 }, { 
   // Automatically manage `createdAt` and `updatedAt` timestamps
   timestamps: true 

@@ -3,6 +3,4 @@ import Movie from '../models/movie.js'; // Assuming you have a Movie model defin
 
 const router = express.Router();
 
-console.log(Movie)
-
 export default router;

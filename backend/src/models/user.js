@@ -20,6 +20,15 @@ const userSchema = new mongoose.Schema({
     type: String, 
     required: true   // Cannot be empty
   },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female', 'Other'], // restrict allowed values
+  },  
+  // User's profile picture URL
+  profilePicture: { 
+    type: String,
+    default: "https://example.com/default-profile.png" // Default profile picture URL
+  },
   // List of movies the user has rated
   ratedMovies: [
     {

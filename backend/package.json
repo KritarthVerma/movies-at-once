@@ -1,7 +1,7 @@
 {
   "name": "movie-listing-app-backend",
   "version": "1.0.0",
-  "type" : "module",
+  "type": "module",
   "description": "Backend for the Movie Listing App, allowing users to list, download, and rate movies.",
   "main": "src/server.js",
   "scripts": {
@@ -9,6 +9,7 @@
     "dev": "nodemon src/server.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.6.0",

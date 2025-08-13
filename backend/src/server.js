@@ -7,7 +7,6 @@ import { fileURLToPath } from 'url';
 
 // Core dependencies
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 
 // Database connection helpers
@@ -50,7 +49,7 @@ app.use(express.json());
 // Mount route handlers
 app.use("/movies", movieRoutes);
 app.use("/comments", commentRoutes);
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
 
 // Start listening for incoming HTTP requests
 app.listen(PORT, () => {
