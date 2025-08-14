@@ -22,7 +22,8 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ['Male', 'Female', 'Other'], // restrict allowed values
+    enum: ["Male", "Female", "Other", "Prefer not to say"], // restrict allowed values
+    default : "Prefer not to say" // Default value if not specified
   },  
   // User's profile picture URL
   profilePicture: { 
