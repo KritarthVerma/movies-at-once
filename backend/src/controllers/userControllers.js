@@ -1,10 +1,14 @@
 import { hash,compare } from 'bcrypt'
 import User from '../models/user.js';
 import Comment from '../models/comment.js';
+import multer from 'multer';
+
+const storage = multer.memoryStorage();
+export const upload = multer({ storage: storage });
 
 export const userSignUp = async (req, res) => {
     try {
-        const { username, email, password, gender, profilePicture } = req.body;
+        const { username, email, password, gender } = req.body;
         if (!username || !email || !password) {
             return res.status(400).json({ message: "Username, email, and password are required" });
         }
@@ -17,9 +21,12 @@ export const userSignUp = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            gender,
-            profilePicture
+            gender
         });
+        if (req.file) {
+            newUser.profilePicture.data = req.file.buffer;
+            newUser.profilePicture.contentType = req.file.mimetype;
+        }
         await newUser.save();
         res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
@@ -68,10 +75,14 @@ export const getUserById = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
+        const updates = { ...req.body };
+        if (req.file) {
+            updates.profilePicture = req.file.buffer;
+        }
         // Update user with new data
         const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
-            { $set: req.body },
+            { $set: updates },
             { new: true, runValidators: true }
         );
         if (!updatedUser) {
@@ -90,6 +101,15 @@ export const deleteUser = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
         res.json({ message: "User deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+
+export const getCommentsByUser = async (req, res) => {
+    try {
+        const comments = await Comment.find({ user: req.params.id });
+        res.json(comments);
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
     }

@@ -27,8 +27,8 @@ const userSchema = new mongoose.Schema({
   },  
   // User's profile picture URL
   profilePicture: { 
-    type: String,
-    default: "https://example.com/default-profile.png" // Default profile picture URL
+    data: Buffer,      // Stores file data
+    contentType: String // Stores file type (e.g., image/png)
   },
   // List of movies the user has rated
   ratedMovies: [
