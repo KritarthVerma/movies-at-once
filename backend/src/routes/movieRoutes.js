@@ -1,6 +1,9 @@
 import express from 'express';
-import Movie from '../models/movie.js'; // Assuming you have a Movie model defined  
+import { addMovie } from '../controllers/movieControllers.js';
+import { upload } from '../controllers/movieControllers.js'; // Import the multer upload middleware
 
 const router = express.Router();
+
+router.post('/add', upload.fields([{ name: "poster" }, { name: "background" }]), addMovie);
 
 export default router;

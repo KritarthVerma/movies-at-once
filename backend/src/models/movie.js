@@ -15,12 +15,12 @@ const movieSchema = new mongoose.Schema({
   },
   // URL of the movie poster image
   poster: { 
-    type: String,
-    required: true // Must provide a poster image URL
+    data: Buffer,      // Stores file data
+    contentType: String, // Stores file type (e.g., image/png)
   },
   background : {
-    type: String,
-    required: true // Must provide a background image URL
+    data: Buffer,      // Stores file data
+    contentType: String, // Stores file type (e.g., image/png)
   },
   // Direct download link for the movie
   downloadLink: { 
@@ -28,9 +28,12 @@ const movieSchema = new mongoose.Schema({
     required: true // Must provide a download link
   },
   // Average rating of the movie (0–5)
-  rating: { 
-    type: Number, 
-    default: 0 // Starts with 0 until ratings are given
+  ratingsCount: {
+    1: { type: Number, default: 0 },
+    2: { type: Number, default: 0 },
+    3: { type: Number, default: 0 },
+    4: { type: Number, default: 0 },
+    5: { type: Number, default: 0 },
   },
   // Total number of reviews submitted for the movie
   totalReviews: { 
@@ -45,7 +48,16 @@ const movieSchema = new mongoose.Schema({
   downloads : {
     type: Number,
     default: 0 // Tracks how many times the movie has been downloaded
-  }
+  },
+  category: { 
+    type: String,
+    required: true 
+  },  // e.g., "Action", "Comedy"
+  tags: { 
+    type: [String],
+    default: [],
+    required: true // Tags for categorization (e.g., "Thriller", "Drama")
+  }  
 }, { 
   // Automatically manage `createdAt` and `updatedAt` timestamps
   timestamps: true 

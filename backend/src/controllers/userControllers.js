@@ -77,7 +77,10 @@ export const updateUser = async (req, res) => {
     try {
         const updates = { ...req.body };
         if (req.file) {
-            updates.profilePicture = req.file.buffer;
+            updates.profilePicture = {
+                data: req.file.buffer,
+                contentType: req.file.mimetype
+            };
         }
         // Update user with new data
         const updatedUser = await User.findByIdAndUpdate(
